@@ -1,11 +1,5 @@
 #set page(numbering: none)
-#set page(
-  fill: rgb("#121212"),
-)
 
-#set text(
-  fill: rgb("#d0ccc2"),
-)
 #align(center + horizon)[
   = GAME DESIGN DOCUMENT
 ]
@@ -63,19 +57,17 @@ The virus ultimately escapes the system by integrating itself into an artificial
 
 #pagebreak()
 
-#stack(
-    dir:rtl,
-    spacing: 10%,
-  stack(
-    spacing: 10%,
-    figure(image("images/placeholder.png"), caption:"placeholder",numbering:none),
-    figure(image("images/placeholder.png"), caption:"placeholder",numbering:none),
-  ),
-  stack(
-    spacing: 10%,
-    figure(image("images/placeholder.png"), caption:"placeholder",numbering:none),
-    figure(image("images/placeholder.png"), caption:"placeholder",numbering:none),
-  ),
+#grid(
+  columns: 2,
+  column-gutter: 8pt,
+  row-gutter: 10pt,
+
+  figure(image("images/scientist.png", width: 70mm, height: 70mm), caption: "Scientist", numbering: none),
+  figure(image("images/MazeDoorWithCube.jpg", width: 70mm, height: 70mm), caption: "Virus Cube", numbering: none),
+  figure(image("images/placeholder.png", width: 70mm, height: 70mm), caption: "Shadow Avatars", numbering: none),
+  figure(image("images/placeholder.png", width: 70mm, height: 70mm), caption: "Antivirus Programs (just cubes but yellow)", numbering: none),
+  figure(image("images/placeholder.png", width: 70mm, height: 70mm), caption: "Artificial Creature in Cage", numbering: none),
+  figure(image("images/placeholder.png", width: 70mm, height: 70mm), caption: "Secret Organization Symbol", numbering: none),
 )
 
 #pagebreak()
@@ -151,7 +143,9 @@ A room encountered between corridor sections.
 ==== Function
 - Acts as a hub and progression gate
 - Requires items or data from mini-games to activate exit
-
+\
+\
+#image("images/MazeDoorWithCube.jpg",width: 200pt)
 
 #pagebreak()
 
@@ -197,6 +191,8 @@ All objects has strict height, collision, and layering rules.
 - Completing simple puzzle platforms
 - Mixing all materials to make a potion
 
+
+
 #pagebreak()
 
 ==== -Rooms-
@@ -236,6 +232,11 @@ On first interaction, he says: “The ingredients are scattered nearby. Bring th
 
 ==== Completion
 Wizard casts a magic to finish the potion and he hands the potion to the player.
+\
+\
+#figure(
+  image("images/IsometricAdventureHubRoom.png", width: 200pt)
+)
 
 #pagebreak()
 
@@ -325,6 +326,11 @@ Its a bit warm, you decided to not question it furthermore.
 
 ==== Completion
 - Simply game crashes
+\
+\
+#figure(
+  image("images/zork.jpg", width: 200pt)
+)
 
 #pagebreak()
 
@@ -356,6 +362,8 @@ Reach the end of the track within the time limit.
 ==== Reward
 - Traffic cone
 
+#image("images/cargame.png", width: 200pt)
+
 === 5.4 Terminal Login Puzzle
 
 ==== Description
@@ -376,16 +384,82 @@ Player must log into the computer using a binary-based password system.
 == 6. LEVEL STRUCTURE
 
 === 6.1 Laboratory
+Asset list:
+- Monitor
+- Chair
+- Desk
+- Landline Phone
+- Photo Frame
+- Keyboard
+- Mouse
+- Mug
+- Curtains
+- Windows
+- Lamp
+- Ceiling Fan
+- Cables
+
 === 6.2  Corridor Layer Point A
+Asset list:
+- Cube
+- Walls
+- Gate
+
 === 6.3  Exit Room
+Asset list:
+- Slot
+- Cables
+- Exit Gate
+- Shadow Avatar Room Entrance Gate
+- Shadow Avatar
+
 === 6.4  Mini-Game 1 (Platforming)
 === 6.5  Corridor Layer Point B (Document)
+Asset list:
+- Cube
+- Walls
+- Gate
+- Lazers
+- Document
+#pagebreak()
+
+#grid(
+  columns: (200pt, 1fr),
+  column-gutter: 16pt,
+
+  image("images/MazeDocument.jpg", width: 180pt),
+
+  block(
+    inset: 10pt,
+    fill: luma(240),
+    radius: 4pt,
+  )[
+    Content of the document:
+    ```
+    This is agent A47… I have been trying to breach the target multiple times and aborted it due to the high level security network  , although good news is We have intel on how to awaken the Artificial creature ACB66 , the only way to do it would be to )@(&&(&(&;&;€€#££^€{££€£#^€¥¥++%%#+message corrupted Please inform the Board that they need to reach his network if they want to get their hands on it now , rest of the message is corrupted.
+    ```
+  ]
+)
 === 6.6  Mini-Game 2 (Text Adventure)
 === 6.7  Corridor Layer Point C (Photo)
+Asset list:
+- Cube
+- Walls
+- Gate
+- Lazers
+- Anti-Viruses
+- Photo
+#image("images/MazeLazer.jpg", width: 180pt)
+
 === 6.8  Mini-Game 3 (Racing)
 === 6.9  Corridor Layer Point D (Voice Message)
-=== 6.10  Exit Room
-=== 6.11 Final Cutscene
+Asset list:
+- Cube
+- Walls
+- Gate
+- Photo
+- Voice Message
+
 
 == 7. ART DIRECTION
 
@@ -417,18 +491,3 @@ Player must log into the computer using a binary-based password system.
 - Synth-based suspense tracks
 - Glitch and distortion effects during system failures
 
----
-
-== 9. ENDGAME SEQUENCE
-
-=== Description
-After placing all required items or data into the exit device,
-the virus escapes the system via a physical cable.
-
-=== Perspective Shift
-Control returns to the scientist.
-
-=== Outcome
-The virus uploads itself into the artificial creature.
-The creature breaks containment, attacks the scientist,
-and the game ends.
