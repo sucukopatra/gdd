@@ -460,7 +460,6 @@ Asset list:
 - Photo
 - Voice Message
 
-
 == 7. ART DIRECTION
 
 === 7.1 Visual Style
