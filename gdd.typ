@@ -375,17 +375,17 @@ Player must log into the computer using a binary-based password system.
 
 == 6. LEVEL STRUCTURE
 
-- Laboratory
-- Corridor Layer Point A
-- Exit Room
-- Mini-Game 1 (Platforming)
-- Corridor Layer Point B (Document)
-- Mini-Game 2 (Text Adventure)
-- Corridor Layer Point C (Photo)
-- Mini-Game 3 (Racing)
-- Corridor Layer Point D (Voice Message)
-- Exit Room
-- Final Cutscene
+=== 6.1 Laboratory
+=== 6.2  Corridor Layer Point A
+=== 6.3  Exit Room
+=== 6.4  Mini-Game 1 (Platforming)
+=== 6.5  Corridor Layer Point B (Document)
+=== 6.6  Mini-Game 2 (Text Adventure)
+=== 6.7  Corridor Layer Point C (Photo)
+=== 6.8  Mini-Game 3 (Racing)
+=== 6.9  Corridor Layer Point D (Voice Message)
+=== 6.10  Exit Room
+=== 6.11 Final Cutscene
 
 == 7. ART DIRECTION
 
