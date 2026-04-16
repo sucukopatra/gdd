@@ -172,7 +172,7 @@ and uses a distinct gameplay genre.
 - System glitches force return to corridor phase
 
 #figure(
-  image("images/Desktop.png", width: 300pt),
+  image("images/Desktop.png", height: 140pt),
   caption: "Desktop environment — mini-game windows are launched from here",
   numbering: none,
 )
@@ -400,175 +400,214 @@ Player must log into the computer using a binary-based password system.
 
 == 6. LEVEL STRUCTURE
 
-// ── Beat chart helpers ────────────────────────────────────────────
-#let _b(body, c) = box(
-  fill: rgb("0a0a0a"),
-  stroke: 1pt + c,
-  inset: (x: 7pt, y: 5pt),
-  radius: 0pt,
-)[#text(fill: c, font: "JetBrainsMono NF", size: 7pt)[#body]]
-
-#let bn(b) = _b(b, rgb("00ff41"))   // event
-#let bc(b) = _b(b, rgb("eebb00"))   // condition / branch
-#let bf(b) = _b(b, rgb("ff4444"))   // failure state
-#let bi(b) = _b(b, rgb("00ccff"))   // item / reward
-#let bt(b) = _b(b, rgb("cc44ff"))   // level transition
-#let bs(b) = _b(b, rgb("ff8c00"))   // scientist interrupt
-
-#let _arr = [#h(2pt)#text(fill: luma(80), size: 9pt)[→]#h(2pt)]
-
-#let bflow(..nodes) = {
-  for (i, n) in nodes.pos().enumerate() {
-    if i > 0 { _arr }
-    n
-  }
-}
-
-#let bbranch(label, ..nodes) = block(
-  inset: (left: 14pt, top: 2pt, bottom: 1pt),
-)[#text(
-  fill: luma(70), font: "JetBrainsMono NF", size: 6.5pt,
-)[↳ #label:] #h(4pt)#bflow(..nodes)]
-
-#let bchart(..rows) = block(
-  stroke: 0.5pt + luma(35),
-  inset: 10pt,
-  width: 100%,
-  fill: rgb("060606"),
-  radius: 0pt,
-)[#stack(dir: ttb, spacing: 5pt, ..rows.pos())]
-
-#block(
-  fill: rgb("0a0a0a"),
-  stroke: 0.5pt + luma(40),
-  inset: (x: 10pt, y: 7pt),
-  width: 100%,
-)[
-  #set text(font: "JetBrainsMono NF", size: 6.5pt)
-  #text(fill: luma(100))[LEGEND] #h(10pt)
-  #bn[EVENT] #h(5pt) #bc[CONDITION] #h(5pt) #bf[FAILURE] #h(5pt)
-  #bi[ITEM] #h(5pt) #bt[TRANSITION] #h(5pt) #bs[SCIENTIST]
-]
-// ─────────────────────────────────────────────────────────────────
-
 === 6.1 Laboratory
 
-#bchart(
-  bflow(bn[GAME START], bn[SCIENTIST PHASE], bn[EXPLORE LAB], bn[FIND WIFE'S PHOTO], bc[PASSWORD CLUE: 38 → 100110]),
-  bflow(bn[APPROACH MONITOR], bn[TERMINAL LOGIN PUZZLE], bc[ENTER BINARY INPUT]),
-  bbranch("CORRECT: 100110", bn[DIGITS COLLAPSE INTO CUBE], bt[→ CORRIDOR A]),
-  bbranch("WRONG INPUT", bf[INPUT RESETS], bn[RETRY]),
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Laboratory],
+  [Location / Time of Day], [Computer Lab / Night],
+  [Story Beat], [Scientist begins late-night experiment; player explores the lab and discovers the binary login puzzle],
+  [Gameplay], [Exploration / Puzzle],
+  [Progression], [Player learns object inspection, monitor interaction, and the Terminal Login Puzzle],
+  [Objective], [Find the password clue hidden behind the photo frame and log into the computer],
+  [Mechanics], [Mouse look, rotatable object inspection, monitor zoom, Terminal Login Puzzle (binary input)],
+  [Items Used], [Photo Frame (password clue — binary value 38)],
+  [Estimated Play Time], [5–10 min],
+  [Color Mapping], [Warm amber (lab environment), phosphor green (monitor screen)],
+  [Assets / Audio], [LAB_THEME, electrical hum, ceiling fan, CRT static hiss, object click, camera shutter, phone bell],
 )
 
-=== 6.2 Corridor Layer A
+=== 6.2 Corridor Layer Point A
 
-#bchart(
-  bflow(bt[← LABORATORY], bn[SPAWN AS VIRUS CUBE], bn[NAVIGATE CORRIDORS], bc[DOOR SPAWNS AFTER N MOVES], bn[REACH DOOR], bt[→ EXIT ROOM]),
-  bbranch("ANTIVIRUS WITHIN 3 TILES", bc[! INTRUDER DETECTED], bn[EVADE]),
-  bbranch("ANTIVIRUS CONTACT", bf[DEATH], bn[RESET SECTION]),
-)
-
-#image("images/MazeDoor.jpg", width: 180pt)
-
-=== 6.3 Exit Room
-
-#bchart(
-  bflow(bn[ENTER EXIT ROOM], bc[CHECK ITEM SLOTS], bc[3/3 FILLED?]),
-  bbranch("YES", bn[EXIT ACTIVATES], bt[→ ESCAPE SEQUENCE]),
-  bbranch("NO — SLOTS EMPTY", bn[ENTER MINI-GAME PORTAL], bn[COMPLETE MINI-GAME], bi[ITEM ACQUIRED], bn[RETURN TO EXIT ROOM]),
-  bbranch("SHADOW AVATAR PRESENT", bn[INTERACTION], bn[CLUE REVEALED]),
-)
-
-#image("images/ExitRoom.jpg", width: 200pt)
-
-=== 6.4 Mini-Game 1 — Isometric Adventure
-
-#bchart(
-  bflow(bt[← EXIT ROOM], bn[ENTER ISOMETRIC WORLD], bn[CENTRAL CHAMBER], bn[MEET WIZARD], bc[CHOOSE A ROOM]),
-  bbranch("STORAGE ROOM", bn[STACK OBJECTS], bn[REACH ELEVATED SHELF], bi[INGREDIENT 1], bn[WIZARD GIVES KEY]),
-  bbranch("COLLAPSED PASSAGE", bn[BRIDGE THE GAP WITH DEBRIS], bn[CROSS TO FAR SIDE], bi[INGREDIENT 2], bn[WIZARD GIVES KEY]),
-  bbranch("SERVICE CORRIDOR", bn[USE BARRELS AS RAMP], bn[REACH RAISED PLATFORM], bi[INGREDIENT 3], bn[WIZARD GIVES KEY]),
-  bflow(bc[ALL 3 INGREDIENTS?], bn[CAULDRON COMPLETE], bn[WIZARD CASTS SPELL], bi[ITEM: POTION], bt[→ EXIT ROOM — SLOT 1]),
-)
-
-=== 6.5 Corridor Layer B — Document
-
-#bchart(
-  bflow(bt[← EXIT ROOM], bn[ENTER CORRIDOR], bc[LASERS ACTIVE], bn[NAVIGATE AROUND LASERS], bn[DISCOVER DOCUMENT], bn[REACH DOOR], bt[→ EXIT ROOM]),
-  bbranch("LASER CONTACT", bf[DEATH], bn[RESET SECTION]),
-  bbranch("SCIENTIST ESCALATION", bs[SCIENTIST INTERVENES], bn[DIRECTIONAL CODE INPUT], bc[CODE CORRECT?], bn[CONTINUE]),
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Corridor Layer — Point A],
+  [Location / Time of Day], [Digital Corridor / Timeless],
+  [Story Beat], [Virus Cube awakens and begins navigating the internal system],
+  [Gameplay], [Navigation],
+  [Progression], [Player learns arrow key movement and corridor exploration],
+  [Objective], [Navigate to the gate and reach the Exit Room],
+  [Mechanics], [Arrow key movement, door spawning after fixed number of turns],
+  [Items Used], [N/A],
+  [Estimated Play Time], [3–5 min],
+  [Color Mapping], [Black (background), phosphor green (neon wireframe geometry)],
+  [Assets / Audio], [CORRIDOR_THEME, arrhythmic data transmission clicks, movement sounds],
 )
 
 #pagebreak()
 
+=== 6.3 Exit Room
+
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Exit Room],
+  [Location / Time of Day], [Digital Hub / Timeless],
+  [Story Beat], [Virus reaches the system hub; must collect items from mini-games to unlock the exit],
+  [Gameplay], [Hub / Progression Gate],
+  [Progression], [Player understands the three-slot item collection objective; encounters Shadow Avatar],
+  [Objective], [Fill all three item slots to activate the exit gate],
+  [Mechanics], [Item slot activation, exit gate unlock, Shadow Avatar interaction],
+  [Items Used], [Three items acquired from mini-games],
+  [Estimated Play Time], [2 min (recurring)],
+  [Color Mapping], [Black, phosphor green; slots pulse green on item insert],
+  [Assets / Audio], [EXITROOM_THEME, low resonant hum, heartbeat-like pulse tied to slot count],
+)
+
+=== 6.4 Mini-Game 1 (Isometric Adventure)
+
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Mini-Game 1 — Isometric Adventure],
+  [Location / Time of Day], [Digital Window / Timeless],
+  [Story Beat], [Virus accesses an isometric game layer; must solve environmental puzzles to acquire an item],
+  [Gameplay], [Isometric Puzzle / Adventure],
+  [Progression], [Player solves height-based object placement puzzles across three rooms connected to a central hub],
+  [Objective], [Collect all three potion ingredients and deliver them to the wizard],
+  [Mechanics], [Isometric grid movement, object stacking, height puzzles, item pickup, cauldron mixing],
+  [Items Used], [Potion (reward on completion)],
+  [Estimated Play Time], [10–15 min],
+  [Color Mapping], [Limited retro palette, harsh contrast, flat-shaded tiles],
+  [Assets / Audio], [MINIGAME_1_THEME (medieval synth, 90 BPM), wooden thock on object placement, wizard "bwom" per word],
+)
+
+#pagebreak()
+
+=== 6.5 Corridor Layer Point B (Document)
+
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Corridor Layer — Point B],
+  [Location / Time of Day], [Digital Corridor / Timeless],
+  [Story Beat], [Virus discovers a corrupted document hinting at a secret organization and the Artificial Creature],
+  [Gameplay], [Navigation / Lore Discovery],
+  [Progression], [Player encounters laser hazards for the first time; glitch meter begins to rise],
+  [Objective], [Navigate past lasers and retrieve the Agent A47 document],
+  [Mechanics], [Arrow key movement, laser avoidance, document interaction (spacebar)],
+  [Items Used], [Document — Agent A47 message],
+  [Estimated Play Time], [5–8 min],
+  [Color Mapping], [Black, phosphor green; red/electric blue for laser threat],
+  [Assets / Audio], [CORRIDOR_THEME, laser hum, paper rustle + data-read beep on document pickup],
+)
+
+=== 6.6 Mini-Game 2 (Text Adventure)
+
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Mini-Game 2 — Text Adventure],
+  [Location / Time of Day], [Digital Window / Timeless],
+  [Story Beat], [Virus navigates a ZORK-style text world; the system begins to destabilize visibly after completion],
+  [Gameplay], [Text Adventure / Puzzle],
+  [Progression], [Player unlocks hidden state flags to open new dialogue paths; UI degrades on completion],
+  [Objective], [Retrieve the Golden Ladle and trigger the game crash to escape the window],
+  [Mechanics], [Numbered input selection, hidden state flags (_HasSpokenToFigure_, _HasLookedAround_, _HasArguedBard_), greyed-out exhausted options],
+  [Items Used], [Golden Ladle (reward on completion)],
+  [Estimated Play Time], [8–12 min],
+  [Color Mapping], [Monochrome — black background, white text; no color variation],
+  [Assets / Audio], [MINIGAME_2_THEME (tavern murmur), atonal bard flute loop, typewriter clack on input, full audio cut on crash],
+)
+#pagebreak()
+=== 6.7 Corridor Layer Point C (Photo)
+
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Corridor Layer — Point C],
+  [Location / Time of Day], [Digital Corridor / Timeless],
+  [Story Beat], [Antivirus programs actively patrol this layer; virus uncovers a photograph tied to the scientist],
+  [Gameplay], [Navigation / Stealth],
+  [Progression], [Player faces combined laser and antivirus threat; Threat Indicator HUD activates],
+  [Objective], [Avoid antiviruses and lasers, retrieve the photograph, reach the exit gate],
+  [Mechanics], [Arrow key movement, laser avoidance, antivirus avoidance, Threat Indicator (within 3 tiles), death/reset on contact],
+  [Items Used], [Photo],
+  [Estimated Play Time], [8–10 min],
+  [Color Mapping], [Black, phosphor green; deep magenta and electric blue for threat states],
+  [Assets / Audio], [CORRIDOR_THEME, antivirus proximity interference (louder/more distorted as threat closes), hard cut to silence on death],
+)
+
+=== 6.8 Mini-Game 3 (Racing)
+
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Mini-Game 3 — Top-Down Racing],
+  [Location / Time of Day], [Digital Window / Timeless],
+  [Story Beat], [Final mini-game; system is heavily degraded and UI instability peaks during play],
+  [Gameplay], [Arcade Racing],
+  [Progression], [Player must complete the track under time pressure with increasing visual corruption],
+  [Objective], [Reach the end of the track within the time limit],
+  [Mechanics], [Top-down forward-scrolling, obstacle avoidance (traffic / barriers / oil slicks), collision reset to start, time limit],
+  [Items Used], [Traffic Cone (reward on completion)],
+  [Estimated Play Time], [5–8 min],
+  [Color Mapping], [Limited arcade palette; HUD speed and time flash red when time drops below 15 seconds],
+  [Assets / Audio], [MINIGAME_3_THEME (arcade loop, 140 BPM), engine pitch-shift with speed, collision noise burst, metronome tick added under 15 s],
+)
+
+#pagebreak()
+
+=== 6.9 Corridor Layer Point D (Voice Message)
+
+#table(
+  columns: (130pt, 1fr),
+  table.header([Game Element], [Description]),
+  [Level Name], [Corridor Layer — Point D],
+  [Location / Time of Day], [Digital Corridor / Timeless],
+  [Story Beat], [Final corridor; voice message reveals the last piece of the secret organization's plan before the escape sequence],
+  [Gameplay], [Navigation / Lore Discovery],
+  [Progression], [All three items now held; player returns to Exit Room to trigger the final escape],
+  [Objective], [Retrieve the voice message and return to the Exit Room with all collected items],
+  [Mechanics], [Arrow key movement, voice message playback (spacebar), exit gate activation with full item slots],
+  [Items Used], [Voice Message; all three prior items in inventory],
+  [Estimated Play Time], [5 min],
+  [Color Mapping], [Black, phosphor green; heavy scanline overlay and geometry corruption as glitch meter peaks],
+  [Assets / Audio], [CORRIDOR_THEME (glitching), voice message audio playback, exit activation jingle on final slot fill],
+)
+
+=== 6.10 Level Reference Images
+
 #grid(
-  columns: (200pt, 1fr),
-  column-gutter: 16pt,
+  columns: 3,
+  column-gutter: 12pt,
+  figure(
+    image("images/MazeDoor.jpg", width: 150pt),
+    caption: [6.2 — Corridor Layer Point A: gate at the end of the first corridor],
+    numbering: none,
+  ),
 
-  image("images/MazeDocument.jpg", width: 180pt),
+  figure(
+    image("images/ExitRoom.jpg", width: 150pt),
+    caption: [6.3 — Exit Room: three item slots and the exit gate],
+    numbering: none,
+  ),
 
-  block(
-    inset: 10pt,
-    fill: luma(240),
-    radius: 4pt,
-  )[
-    Content of the document:
-    ```
-    This is agent A47… I have been trying to breach the target multiple times and aborted it due to the high level security network  , although good news is We have intel on how to awaken the Artificial creature ACB66 , the only way to do it would be to )@(&&(&(&;&;€€#££^€{££€£#^€¥¥++%%#+message corrupted Please inform the Board that they need to reach his network if they want to get their hands on it now , rest of the message is corrupted.
-    ```
-  ]
+  figure(
+    image("images/MazeDocument.jpg", width: 150pt),
+    caption: [6.5 — Corridor Layer Point B: document pickup location],
+    numbering: none,
+  )
 )
 
-=== 6.6 Mini-Game 2 — Text Adventure
-
-#bchart(
-  bflow(bt[← EXIT ROOM], bn[ENTER SANDY'S TAVERN], bn[SCENE 0: CHOOSE ACTION]),
-  bbranch("LOOK AROUND (B)", bn[HAS LOOKED AROUND = TRUE], bn[SEE CAT / KNIGHT / BACKWARDS PERSON]),
-  bbranch("TALK TO FIGURE (C)", bc[HAS LOOKED AROUND?], bn[MENTION CAT → HAS SPOKEN TO FIGURE = TRUE]),
-  bbranch("LOOK AT THE CAT (E)", bn[CAT TANGLES IN ROPE], bn[CAT ATTACKS BARD], bi[ITEM: GOLDEN LADLE], bn[GAME CRASHES], bt[→ EXIT ROOM — SLOT 2]),
-  bbranch("WRONG CHOICES AT C", bf[RETURN TO SCENE C], bn[RETRY]),
+#grid(
+  columns: 2,
+  column-gutter: 12pt,
+  figure(
+    image("images/MazeLazer.jpg", height: 100pt),
+    caption: [6.7 — Corridor Layer Point C: laser corridor],
+    numbering: none,
+  ),
+  figure(
+    image("images/MazeLazerWithCube.jpg", height: 100pt),
+    caption: [6.7 — Corridor Layer Point C: virus cube navigating lasers],
+    numbering: none,
+  ),
 )
 
-=== 6.7 Corridor Layer C — Photo
-
-#bchart(
-  bflow(bt[← EXIT ROOM], bn[ENTER CORRIDOR], bc[LASERS + ANTIVIRUSES], bn[NAVIGATE THREATS], bn[DISCOVER PHOTO], bn[REACH DOOR], bt[→ EXIT ROOM]),
-  bbranch("ANTIVIRUS CONTACT", bf[DEATH], bn[RESET SECTION]),
-  bbranch("LASER CONTACT", bf[DEATH], bn[RESET SECTION]),
-  bbranch("SCIENTIST ESCALATION", bs[SCIENTIST INTERVENES], bn[DIRECTIONAL CODE INPUT], bc[CODE CORRECT?], bn[CONTINUE]),
-)
-
-#stack(
-  dir: ltr,
-  spacing: 10pt,
-  image("images/MazeLazer.jpg", width: 170pt),
-  image("images/MazeLazerWithCube.jpg", width: 170pt),
-)
-
-=== 6.8 Mini-Game 3 — Top-Down Racing
-
-#bchart(
-  bflow(bt[← EXIT ROOM], bn[ENTER RACE], bn[CONSTANT FORWARD SCROLL], bc[AVOID OBSTACLES], bc[WITHIN TIME LIMIT?]),
-  bbranch("REACH FINISH", bi[ITEM: TRAFFIC CONE], bt[→ EXIT ROOM — SLOT 3]),
-  bbranch("COLLISION", bf[RESET TO START]),
-  bbranch("TIME EXPIRES", bf[RACE RESTARTS]),
-)
-
-=== 6.9 Corridor Layer D — Voice Message
-
-#bchart(
-  bflow(bt[← EXIT ROOM], bn[ENTER FINAL CORRIDOR], bn[DISCOVER VOICE MESSAGE], bc[ALL 3 SLOTS FILLED?]),
-  bbranch("YES", bn[RETURN TO EXIT ROOM], bn[EXIT ACTIVATES], bt[→ ESCAPE SEQUENCE]),
-  bbranch("ANTIVIRUS / LASER CONTACT", bf[DEATH], bn[RESET SECTION]),
-)
-
-=== 6.10 Escape Sequence
-
-#bchart(
-  bflow(bn[EXIT ACTIVATES], bs[FINAL SCIENTIST ESCALATION], bn[DIRECTIONAL CODE: FINAL SEQUENCE], bc[CODE CORRECT?]),
-  bbranch("YES", bn[VIRUS TRANSFERS TO ACB66], bn[ARTIFICIAL CREATURE AWAKENS], bt[END]),
-  bbranch("CODE FAILS", bf[RESET], bn[RETRY]),
-)
+#pagebreak()
 
 == 7. HUD DESIGN
 
@@ -685,6 +724,8 @@ of a machine that is barely holding together.
 - Antivirus proximity: high-frequency interference that grows louder
   and more distorted as threat closes in
 - Death: hard digital cut to silence, then CRT static burst before reset
+
+#pagebreak()
 
 === 8.4 Mini-Game Audio
 
