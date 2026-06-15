@@ -153,11 +153,11 @@ The virus is the missing piece; only when it migrates into the body, the vessel 
   column-gutter: 8pt,
   row-gutter: 10pt,
 
-  figure(image("images/scientist.png", width: 70mm, height: 70mm, fit: "contain"), caption: "Scientist", numbering: none),
+  figure(image("images/scientist.jpeg", width: 70mm, height: 70mm, fit: "contain"), caption: "Scientist", numbering: none),
   figure(image("images/MazeDoorWithCube.jpg", width: 70mm, height: 70mm), caption: "Virus Cube", numbering: none),
-  figure(image("images/placeholder.png", width: 70mm, height: 70mm), caption: "Mini-Game Avatar Silhouette", numbering: none),
-  figure(image("images/placeholder.png", width: 70mm, height: 70mm), caption: "Antivirus Programs", numbering: none),
-  figure(image("images/placeholder.png", width: 70mm, height: 70mm), caption: "Artificial Creature in Cage", numbering: none),
+  figure(image("images/shadowavatar.png", width: 70mm, height: 70mm), caption: "Mini-Game Avatar Silhouette", numbering: none),
+  figure(image("images/MazeDoorWithVirus.png", width: 70mm, height: 70mm), caption: "Antivirus Programs", numbering: none),
+  figure(image("images/ArtificialCreature.PNG", width: 70mm, height: 70mm), caption: "Artificial Creature in Cage", numbering: none),
   figure(image("images/placeholder.png", width: 70mm, height: 70mm), caption: "Secret Organization Symbol", numbering: none),
 )
 ]
@@ -582,7 +582,7 @@ ramp the threat, and each Security Escalation pushes a new peak before the final
 
 #figure(
   image("images/placeholder.png", width: 62%),
-  caption: [*Corridor schematic (to draw).* Top-down map of a corridor: turning-point forks, possible door-spawn positions, the collectible, the avatar silhouette (mini-game entry), hazard zones, dead ends, and the link back to the Exit Room. Points A–D reuse this structure with escalating hazards — A: none; B: lasers; C: lasers + antivirus patrols; D: corruption.],
+  caption: [*Corridor schematic.* Top-down map of a corridor: turning-point forks, possible door-spawn positions, the collectible, hazard zones, dead ends, and the link back to the Exit Room.],
   numbering: none,
 )
 
@@ -605,8 +605,8 @@ ramp the threat, and each Security Escalation pushes a new peak before the final
 )
 
 #figure(
-  image("images/placeholder.png", width: 62%),
-  caption: [*Exit Room schematic (to draw).* Top-down of the hub: the three item slots, the exit device/gate, and how the corridors spoke off it — showing the hub-and-spoke loop the virus returns to between mini-games.],
+  image("images/ExitRoom.jpg", width: 62%),
+  caption: [Exit Room: the three item slots and the exit device the virus must activate.],
   numbering: none,
 )
 
@@ -629,8 +629,8 @@ ramp the threat, and each Security Escalation pushes a new peak before the final
 )
 
 #figure(
-  image("images/placeholder.png", width: 62%),
-  caption: [*Mini-Game 1 dungeon floorplan (to draw).* Top-down layout: the central chamber (cauldron + wizard) and the three puzzle rooms branching off it — Storage Room, Collapsed Passage, Service Corridor — with the one ingredient marked in each and the locked-door progression between them.],
+  image("images/IsometricAdventureMap.png", width: 62%),
+  caption: [*Mini-Game 1 dungeon floorplan.* Top-down layout: the central chamber (cauldron + wizard) and the three puzzle rooms branching off it. Storage Room, Collapsed Passage, Service Corridor with the one ingredient marked in each.],
   numbering: none,
 )
 
